@@ -82,11 +82,11 @@ select i.tipodoc, i.serie, i.numero, i.cod_art, cod_lin, i.cantidad, i.precio_de
    and extract(year from d.fecha) between 2021 and 2023;
 
 -- facturas enlace docuvent
-select c.nombre, to_char(f.fecemb, 'DD/MM/YYYY'), p.abrevia
-  from exfacturas f
-     , excondpago c
-     , expaises p
- where f.cond_pago = c.cond_pago
-   and f.pais = p.pais
-   and numero = 55000000 + rec.numero_factura;
+-- select c.nombre, to_char(f.fecemb, 'DD/MM/YYYY'), p.abrevia
+--   from exfacturas f
+--      , excondpago c
+--      , expaises p
+--  where f.cond_pago = c.cond_pago
+--    and f.pais = p.pais
+--    and numero = 55000000 + rec.numero_factura;
 
