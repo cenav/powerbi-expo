@@ -17,8 +17,30 @@ select d.tipodoc, d.serie, d.numero, d.fecha, f.cod_cliente, zona as vendedor, i
     where numero = f.numero
       and accion = '92'
    )
-   and extract(year from d.fecha) between 2020 and 2023;
+   and extract(year from d.fecha) between 2010 and 2024;
 
+create view powerbi.pbi_regvent as
+select d.tipodoc, d.serie, d.numero, d.fecha, f.cod_cliente, zona as vendedor, imp_neto, imp_gastos
+     , imp_descto, imp_fletes, imp_seguros
+  from docuvent d
+       join tablas_auxiliares t on t.codigo = d.tipodoc
+       left join exfacturas f
+                 on d.tipodoc = f.tipodoc
+                   and d.serie = f.serie
+                   and 55000000 + d.numero = f.numero
+ where nvl(d.estado, '0') != '9'
+   and t.tipo = 2
+   and nvl(d.origen, '0') = 'EXPO'
+--    and d.numero = '16209'
+   and not exists(
+   select 1
+     from exfacturas_his
+    where numero = f.numero
+      and accion = '92'
+   );
+
+
+grant select on pevisa.docuvent to powerbi;
 
 -- registro venta excel
 select d.tipodoc, t.descripcion, d.serie, d.numero as numero_factura, d.fecha, d.cod_cliente
